@@ -1,0 +1,24 @@
+{
+    "name": "digitalsite/facturacion",
+    "description": "Control Estadistico",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "sitedigital",
+            "email": "info@sitedigital.com.co"
+        }
+    ],
+     "autoload": {
+
+        "psr-4": {
+            "Digitalsite\\Facturacion\\": "src/"
+        }
+
+    },
+    "minimum-stability": "stable",
+    "require": {
+
+         "illuminate/support": "~5"
+
+    }
+}
