@@ -22,6 +22,9 @@
        <li>
        <a href="/gestion/factura/factura-cliente"><i class="fa fa-user-plus"></i> Crear Cliente</a>
       </li>
+        <li>
+       <a href="/gestion/factura/control-gastos"><i class="fa fa-user-plus"></i> Gastos</a>
+      </li>
      </ul>
     </div>
 

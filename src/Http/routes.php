@@ -18,6 +18,7 @@ Route::resource('gestion/factura/editar-factura', 'Digitalsite\Facturacion\Http\
 Route::resource('gestion/factura/actualizar-factura', 'Digitalsite\Facturacion\Http\FacturacionController@updatefactura');
 Route::resource('gestion/factura/generar-factura', 'Digitalsite\Facturacion\Http\FacturacionController@pdf');
 Route::resource('gestion/factura/generar-facturacopia', 'Digitalsite\Facturacion\Http\FacturacionController@pdfcopia');
+Route::resource('gestion/factura/creargasto', 'Digitalsite\Facturacion\Http\FacturacionController@creargasto');
 
 Route::resource('gestion/factura/generar-producto', 'Digitalsite\Facturacion\Http\FacturacionController@facturaproducto');
 Route::resource('gestion/factura/creacion-producto', 'Digitalsite\Facturacion\Http\FacturacionController@creatproducto');
@@ -26,12 +27,24 @@ Route::resource('gestion/factura/eliminar-producto', 'Digitalsite\Facturacion\Ht
 Route::resource('gestion/factura/editar-producto', 'Digitalsite\Facturacion\Http\FacturacionController@editarproducto');
 Route::resource('gestion/factura/actualizar-producto', 'Digitalsite\Facturacion\Http\FacturacionController@actualizarproducto');
 Route::resource('gestion/factura/factura-cliente', 'Digitalsite\Facturacion\Http\FacturacionController@crearcliente');
+Route::resource('gestion/factura/control-gastos', 'Digitalsite\Facturacion\Http\FacturacionController@gastos');
+Route::resource('gestion/factura/crear-gasto', 'Digitalsite\Facturacion\Http\FacturacionController@creargastos');
+Route::resource('gestion/factura/crear-concepto', 'Digitalsite\Facturacion\Http\FacturacionController@crearconcepto');
+Route::resource('gestion/factura/ingresarconcepto', 'Digitalsite\Facturacion\Http\FacturacionController@ingresarconcepto');
+Route::resource('gestion/factura/eliminar-concepto', 'Digitalsite\Facturacion\Http\FacturacionController@eliminarconcepto');
+Route::resource('gestion/factura/editar-concepto', 'Digitalsite\Facturacion\Http\FacturacionController@editarconcepto');
+Route::resource('gestion/factura/updateconcepto', 'Digitalsite\Facturacion\Http\FacturacionController@updateconcepto');
+
+Route::resource('gestion/factura/actualizarinput', 'Digitalsite\Facturacion\Http\FacturacionController@actualizarinput');
 
 
 Route::resource('gestion/factura/eliminar-cliente', 'Digitalsite\Facturacion\Http\FacturacionController@eliminarcliente');
 Route::resource('gestion/factura/eliminar-almacen', 'Digitalsite\Facturacion\Http\FacturacionController@eliminaralmacen');
 Route::resource('gestion/factura/editar-almacen', 'Digitalsite\Facturacion\Http\FacturacionController@editaralmacen');
 Route::resource('gestion/factura/crear-facturacion', 'Digitalsite\Facturacion\Http\FacturacionController@crearfactura');
+Route::resource('gestion/factura/eliminar-gasto', 'Digitalsite\Facturacion\Http\FacturacionController@eliminargasto');
+Route::resource('gestion/factura/editar-gasto', 'Digitalsite\Facturacion\Http\FacturacionController@editargasto');
+Route::resource('gestion/factura/actualizargasto', 'Digitalsite\Facturacion\Http\FacturacionController@actualizargasto');
 
 Route::get('gestion/factura/informe', function()
 {
@@ -164,6 +177,11 @@ Route::get('informe/generar-informe', function(){
 
 
 
+Route::get('informe/generar-informacion', function(){
+  
+      return View::make('facturacion::filtroinfo');
+});
+
 
 
   Route::post('/productos/create', function(App\Http\Requests\AlmacenCreateRequest $Request){
@@ -246,6 +264,116 @@ $facturacion = Digitalsite\Facturacion\Factura::find($id)->Productos;
 		$product = Digitalsite\Facturacion\Almacen::Orderby('id', 'desc')->take(10)->pluck('producto','id');
 		$retefuente = DB::table('facturas')->join('clientes','clientes.id','=','facturas.cliente_id')->where('facturas.id', '=', $id)->get();
 	    return View::make('facturacion::crear_producto')->with('retefuente', $retefuente)->with('facturacion', $facturacion)->with('contenido', $contenido)->with('product', $product)->with('categories', $categories);
+});
+
+
+
+ Route::post('informe/generalgasto', function(){
+       
+       $min_price = Input::has('min_price') ? Input::get('min_price') : 0;
+       $max_price = Input::has('max_price') ? Input::get('max_price') : 10000000;
+       $clientes =  Input::get('cliente') ;
+       $estados =  Input::get('estado') ;
+   
+      
+          $unitarios  = DB::table('gastos')
+          ->whereBetween('fecha', array($min_price, $max_price))
+          ->selectRaw('sum(valor) as valor')
+          ->selectRaw('sum(iva) as iva')
+          ->selectRaw('sum(impuesto) as impuesto')
+          ->selectRaw('sum(valorfac) as valorfac')
+          ->selectRaw('sum(retefuente) as retefuente')
+          ->selectRaw('sum(reteica) as reteica')
+          ->selectRaw('sum(descuento) as descuento')
+          ->selectRaw('sum(totaldes) as totaldes')
+          ->selectRaw('sum(neto) as neto')
+          ->get();
+
+          $gastos = DB::table('gastos')
+          ->whereBetween('fecha', array($min_price, $max_price))
+          ->orderBy('mes')
+          ->get();
+
+
+          $resultados =  DB::table('gastos')
+          ->whereBetween('fecha', array($min_price, $max_price))
+          ->selectRaw('mes')
+          ->selectRaw('sum(neto) as valor')
+   
+          ->groupBy('mes')
+          ->get();
+
+
+         $total = DB::table('productos')
+         ->join('facturas', 'productos.factura_id', '=', 'facturas.id')
+         ->whereBetween('f_emision', array($min_price, $max_price))
+         ->where('cliente_id', 'like', '%' . $clientes . '%')
+         ->where('estadof', 'like', '%' . $estados . '%')
+         
+         ->sum('v_total');
+
+          $iva = DB::table('productos')
+         ->join('facturas', 'productos.factura_id', '=', 'facturas.id')
+         ->whereBetween('f_emision', array($min_price, $max_price))
+         ->where('cliente_id', 'like', '%' . $clientes . '%')
+         ->where('estadof', 'like', '%' . $estados . '%')
+         
+         ->sum('costoiva');
+
+         $fuente = DB::table('productos')
+         ->join('facturas', 'productos.factura_id', '=', 'facturas.id')
+         ->whereBetween('f_emision', array($min_price, $max_price))
+         ->where('cliente_id', 'like', '%' . $clientes . '%')
+         ->where('estadof', 'like', '%' . $estados . '%')
+         
+         ->sum('rtefte');
+
+         $ica = DB::table('productos')
+         ->join('facturas', 'productos.factura_id', '=', 'facturas.id')
+         ->whereBetween('f_emision', array($min_price, $max_price))
+         ->where('cliente_id', 'like', '%' . $clientes . '%')
+         ->where('estadof', 'like', '%' . $estados . '%')
+         ->sum('rteica');
+
+         $productos = DB::table('productos')
+        ->join('facturas', 'productos.factura_id', '=', 'facturas.id')
+        ->whereBetween('f_emision', array($min_price, $max_price))
+         ->where('cliente_id', 'like', '%' . $clientes . '%')
+         ->where('estadof', 'like', '%' . $estados . '%')
+          ->selectRaw('sum(v_total) as sum')
+          ->selectRaw('sum(masiva) as masiva')
+          ->selectRaw('sum(rtefte) as rtefte')
+          ->selectRaw('sum(rteica) as rteica')
+          ->selectRaw('cliente_id as mus')
+          ->groupBy('cliente_id')
+          ->get();
+
+          $empresa = DB::table('empresas')->where('id', 1)->get();
+
+            $conteo = DB::table('clientes')
+        ->join('facturas', 'clientes.id', '=', 'facturas.cliente_id')
+        ->whereBetween('f_emision', array($min_price, $max_price))
+         ->where('cliente_id', 'like', '%' . $clientes . '%')
+         ->where('estadof', 'like', '%' . $estados . '%')
+          ->selectRaw('count(cliente_id) as sum')
+          ->selectRaw('cliente_id as mus')
+          ->groupBy('cliente_id')
+          ->get();
+
+          $facturas = DB::table('facturas')->count();
+          $cuentas = DB::table('productos')
+          ->get();
+
+          $prefijo = Digitalsite\Facturacion\Empresa::find(1);
+
+        $clientes = DB::table('clientes')->get();
+
+        $pdf = app('dompdf.wrapper');
+        $pdf->getDomPDF()->set_option("enable_php", true);
+        
+      $pdf = PDF::loadView('facturacion::informegasto', compact('users', 'clientes', 'resultados', 'gastos', 'total', 'empresa', 'iva', 'fuente', 'ica', 'productos', 'facturas', 'conteo', 'prefijo', 'min_price', 'max_price', 'unitarios'));
+        $pdf->setPaper('A4', 'landscape');
+      return  $pdf->stream();
 });
 
 

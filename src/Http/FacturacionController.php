@@ -15,6 +15,8 @@ use Digitalsite\Facturacion\Factura;
 use Digitalsite\Facturacion\Producto;
 use Digitalsite\Facturacion\Max;
 use Digitalsite\Facturacion\Category;
+use Digitalsite\Facturacion\Gasto;
+use Digitalsite\Facturacion\Concepto;
 use DB;
 use PDF;
 use App\Http\Controllers\Controller;
@@ -54,11 +56,25 @@ public function createproducto(){
 		}
 
 		public function crearcliente(){
-
-	
 	    return view('facturacion::crear_cliente');
 		}
 
+
+		public function gastos(){
+		$gastos = Gasto::all();
+	    return view('facturacion::gastos')->with('gastos', $gastos);
+		}
+
+		public function creargastos(){
+		$concepto = Concepto::pluck('concepto', 'id');
+
+	    return view('facturacion::crear-gastos', compact('id', 'concepto'));
+		}
+
+		public function crearconcepto(){
+		$conceptos = Concepto::all();
+	    return view('facturacion::crear-concepto')->with('conceptos', $conceptos);
+		}
 
 
       public function update(EmpresaUpdateRequest $request) {
@@ -90,6 +106,53 @@ public function createproducto(){
 		return Redirect('gestion/factura')->with('status', 'ok_create');
 
     }
+
+    	    public function creargasto(){
+	
+	$contenido = new Gasto;
+	$contenido->mes = Input::get('mes');
+	$contenido->fecha = Input::get('fecha');
+	$contenido->compra = Input::get('compra');
+	$contenido->tercero = Input::get('tercero');
+	$contenido->tipo = Input::get('tipo');
+	$contenido->descripcion = Input::get('descripcion');
+	$contenido->concepto = Input::get('concepto');
+	$contenido->valor = Input::get('valor');
+	$contenido->iva = Input::get('iva');
+	$contenido->impuesto = Input::get('impuesto');
+	$contenido->valorfac = Input::get('valorfac');
+	$contenido->retefuente = Input::get('retefuente');
+	$contenido->reteica = Input::get('reteica');
+	$contenido->reteiva = Input::get('reteiva');
+	$contenido->descuento = Input::get('descuento');
+	$contenido->totaldes = Input::get('totaldes');
+	$contenido->neto = Input::get('neto');
+	$contenido->save();
+
+	return Redirect('gestion/factura/control-gastos')->with('status', 'ok_create');
+	}
+
+    public function ingresarconcepto(){
+	
+	$contenido = new Concepto;
+	$contenido->concepto = Input::get('concepto');
+	$contenido->save();
+	return Redirect('gestion/factura/crear-concepto/')->with('status', 'ok_create');
+	}
+
+	public function editarconcepto($id){
+	$conceptos = Concepto::find($id);
+	return view('facturacion::editar-concepto')->with('conceptos', $conceptos);
+	}
+
+
+  public function updateconcepto($id){
+	$input = Input::all();
+	$contenido = Concepto::find($id);
+	$contenido->concepto = Input::get('concepto');
+	$contenido->save();
+	return Redirect('gestion/factura/crear-concepto/')->with('status', 'ok_create');
+	}
 
     public function create() {
  
@@ -319,6 +382,14 @@ public function facturaproducto($id){
 		return Redirect('Facturacione/'.$facturacion->factura_id)->with('status', 'ok_delete');
 		}
 
+		public function eliminarconcepto($id){
+
+		$facturacion = Concepto::find($id);
+		$facturacion->delete();
+		return Redirect('gestion/factura/crear-concepto')->with('status', 'ok_delete');
+		}
+
+
  		public function editarproducto($id){
 
 		$facturacion = DB::table('productos')->where('id', "=", $id)->get();
@@ -387,6 +458,12 @@ public function facturaproducto($id){
 		return Redirect('gestion/factura')->with('status', 'ok_delete');
 		}
 
+	 public function eliminargasto($id){
+
+		$facturacion = Gasto::find($id);
+		$facturacion->delete();
+		return Redirect('gestion/factura/control-gastos')->with('status', 'ok_delete');
+		}
 
 	public function eliminaralmacen($id){
 
@@ -395,7 +472,41 @@ public function facturaproducto($id){
 		return Redirect('gestion/factura/crear-producto')->with('status', 'ok_delete');
 		}
 
-		
+
+		public function editargasto($id){
+
+		$gastos = Gasto::join('concepto','concepto.id','=','gastos.concepto')->get();
+		$concepto = Concepto::all();
+		return view('facturacion::editar-gastos')->with('gastos', $gastos)->with('concepto', $concepto);
+	    }
+
+	       public function actualizargasto($id){
+
+        $input = Input::all();
+		$facturacion = Gasto::find($id);
+		$contenido->mes = Input::get('mes');
+		$contenido->fecha = Input::get('fecha');
+		$contenido->compra = Input::get('compra');
+		$contenido->tercero = Input::get('tercero');
+		$contenido->tipo = Input::get('tipo');
+		$contenido->descripcion = Input::get('descripcion');
+		$contenido->concepto = Input::get('concepto');
+		$contenido->valor = Input::get('valor');
+		$contenido->iva = Input::get('iva');
+		$contenido->impuesto = Input::get('impuesto');
+		$contenido->valorfac = Input::get('valorfac');
+		$contenido->retefuente = Input::get('retefuente');
+		$contenido->reteica = Input::get('reteica');
+		$contenido->reteiva = Input::get('reteiva');
+		$contenido->descuento = Input::get('descuento');
+		$contenido->totaldes = Input::get('totaldes');
+		$contenido->neto = Input::get('neto');
+		$facturacion->save();
+
+		return Redirect('gestion/factura/control-gastos')->with('status', 'ok_create');
+       
+	    }
+
 
 }
 
