@@ -187,11 +187,12 @@
                                             </div>
                                         </div>
 
-                                        <div class="form-group">
-                                            <label class="col-md-3 control-label" for="example-password-input">Logo compañía</label>
+
+                                           <div class="form-group">
+                                            <label class="col-md-3 control-label" for="example-password-input">Imagen</label>
                                             <div class="col-md-9">
-                                                {{Form::text('FilePath', $facturacion->image, array('class' => 'form-control','id' => 'xFilePath', 'placeholder'=>'Ingrese imagen'))}}<br>
-                                                <input class="btn btn-primary" type="button" value="Browse Server" onclick="BrowseServer();" />
+                                                {{Form::text('FilePath', $facturacion->image, array('class' => 'form-control','id' => 'ckfinder-input-1', 'placeholder'=>'Ingrese imagen'))}}<br>
+                                                 <input class="btn btn-primary" id="ckfinder-modal-1" type="button" value="Browse Server"/>
                                             </div>
                                         </div>
 
@@ -492,20 +493,37 @@ $(document).ready(function() {
 </script> 
 
  
-<script type="text/javascript">
-function BrowseServer()
-{
-  // You can use the "CKFinder" class to render CKFinder in a page:
-  var finder = new CKFinder();
-  finder.basePath = '../';  // The path for the installation of CKFinder (default = "/ckfinder/").
-  finder.selectActionFunction = SetFileField;
-  finder.popup();
-}
-function SetFileField( fileUrl )
-{
-  document.getElementById( 'xFilePath' ).value = fileUrl;
-}
+<script>
+
+
+  var button1 = document.getElementById( 'ckfinder-modal-1' );
+
+
+  button1.onclick = function() {
+    selectFileWithCKFinder( 'ckfinder-input-1' );
+  };
+
+  function selectFileWithCKFinder( elementId ) {
+    CKFinder.modal( {
+      chooseFiles: true,
+      width: 1200,
+      height: 600,
+      onInit: function( finder ) {
+        finder.on( 'files:choose', function( evt ) {
+          var file = evt.data.files.first();
+          var output = document.getElementById( elementId );
+          output.value = file.getUrl();
+        } );
+
+        finder.on( 'file:choose:resizedImage', function( evt ) {
+          var output = document.getElementById( elementId );
+          output.value = evt.data.resizedUrl;
+        } );
+      }
+    } );
+  }
 </script>
+
 
   <script type="text/javascript">
 $(function(){
