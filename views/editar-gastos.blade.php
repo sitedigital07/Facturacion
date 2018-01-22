@@ -164,10 +164,17 @@
                                             </div>
                                         </div>
 
-                                         <div class="form-group">
+                                        <div class="form-group">
                                             <label class="col-md-3 control-label" for="example-password-input">IVA</label>
                                             <div class="col-md-9">
-                                                 {{Form::text('iva', $gastos->iva, array('class' => 'form-control'))}}
+                                                 {{Form::text('iva', '0', array('class' => 'form-control'))}}
+                                            </div>
+                                        </div>
+
+                                             <div class="form-group">
+                                            <label class="col-md-3 control-label" for="example-password-input">Valor Gasto / Compra No Gravado</label>
+                                            <div class="col-md-9">
+                                                 {{Form::text('valornogra', '0', array('class' => 'form-control'))}}
                                             </div>
                                         </div>
 

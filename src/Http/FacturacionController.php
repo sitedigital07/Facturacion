@@ -118,6 +118,7 @@ public function createproducto(){
 	$contenido->descripcion = Input::get('descripcion');
 	$contenido->concepto = Input::get('concepto');
 	$contenido->valor = Input::get('valor');
+	$contenido->valornogra = Input::get('valornogra');
 	$contenido->iva = Input::get('iva');
 	$contenido->impuesto = Input::get('impuesto');
 	$contenido->valorfac = Input::get('valorfac');
@@ -492,6 +493,7 @@ public function facturaproducto($id){
 		$contenido->descripcion = Input::get('descripcion');
 		$contenido->concepto = Input::get('concepto');
 		$contenido->valor = Input::get('valor');
+		$contenido->valornogra = Input::get('valornogra');
 		$contenido->iva = Input::get('iva');
 		$contenido->impuesto = Input::get('impuesto');
 		$contenido->valorfac = Input::get('valorfac');

@@ -191,8 +191,7 @@
                                            <div class="form-group">
                                             <label class="col-md-3 control-label" for="example-password-input">Imagen</label>
                                             <div class="col-md-9">
-                                                {{Form::text('FilePath', $facturacion->image, array('class' => 'form-control','id' => 'ckfinder-input-1', 'placeholder'=>'Ingrese imagen'))}}<br>
-                                                 <input class="btn btn-primary" id="ckfinder-modal-1" type="button" value="Browse Server"/>
+                                                 <input type="text" name="FilePath" readonly="readonly" onclick="openKCFinder(this)" value="{{$facturacion->image}}" class="form-control" />
                                             </div>
                                         </div>
 
@@ -212,7 +211,7 @@
                           
 </div>
     
-       {{ Html::script('ckfinder/ckfinder.js') }}   
+
      {{ Html::script('Calendario/js/moment.min.js') }}
      {{ Html::script('Calendario/js/bootstrap-datetimepicker.min.js') }}
      {{ Html::script('EstilosSD/dist/js/jquery.minicolors.min.js') }}
@@ -493,37 +492,20 @@ $(document).ready(function() {
 </script> 
 
  
-<script>
-
-
-  var button1 = document.getElementById( 'ckfinder-modal-1' );
-
-
-  button1.onclick = function() {
-    selectFileWithCKFinder( 'ckfinder-input-1' );
-  };
-
-  function selectFileWithCKFinder( elementId ) {
-    CKFinder.modal( {
-      chooseFiles: true,
-      width: 1200,
-      height: 600,
-      onInit: function( finder ) {
-        finder.on( 'files:choose', function( evt ) {
-          var file = evt.data.files.first();
-          var output = document.getElementById( elementId );
-          output.value = file.getUrl();
-        } );
-
-        finder.on( 'file:choose:resizedImage', function( evt ) {
-          var output = document.getElementById( elementId );
-          output.value = evt.data.resizedUrl;
-        } );
-      }
-    } );
-  }
+<script type="text/javascript">
+function openKCFinder(field) {
+    window.KCFinder = {
+        callBack: function(url) {
+            field.value = url;
+            window.KCFinder = null;
+        }
+    };
+    window.open('/vendors/kcfinder/browse.php?type=images&dir=files/public', 'kcfinder_textbox',
+        'status=0, toolbar=0, location=0, menubar=0, directories=0, ' +
+        'resizable=1, scrollbars=0, width=800, height=600'
+    );
+}
 </script>
-
 
   <script type="text/javascript">
 $(function(){
