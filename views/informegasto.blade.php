@@ -90,13 +90,14 @@ echo date('Y-m-d H:i:s');
 		<tr>
 			@foreach($unitarios as $unitariosa)
 
-			<td style="background:none"><h3>Valor<br>$ {{number_format($unitariosa->valor,0, ",", ".")}}</h3></td>
-			<td style="background:none"><h3>Iva<br>$ {{number_format($unitariosa->iva,0, ",", ".")}}</h3></td>
-			<td style="background:none"><h3>Impuesto<br>$ {{number_format($unitariosa->impuesto,0, ",", ".")}}</h3></td>
-			<td style="background:none"><h3>Valorfac<br>$ {{number_format($unitariosa->valorfac,0, ",", ".")}}</h3></td>
-			<td style="background:none"><h3>Retefuente<br>$ {{number_format($unitariosa->retefuente,0, ",", ".")}}</h3></td>
+			<td style="background:none"><h3>Valor Gravado.<br>$ {{number_format($unitariosa->valor,0, ",", ".")}}</h3></td>
+			<td style="background:none"><h3>IVA<br>$ {{number_format($unitariosa->iva,0, ",", ".")}}</h3></td>
+			<td style="background:none"><h3>Valor No Gravado.<br>$ {{number_format($unitariosa->valornogra,0, ",", ".")}}</h3></td>
+			<td style="background:none"><h3>Impuesto Consumo<br>$ {{number_format($unitariosa->impuesto,0, ",", ".")}}</h3></td>
+			<td style="background:none"><h3>Valor Factura<br>$ {{number_format($unitariosa->valorfac,0, ",", ".")}}</h3></td>
+			<td style="background:none"><h3>Reteción Fuente<br>$ {{number_format($unitariosa->retefuente,0, ",", ".")}}</h3></td>
 			<td style="background:none"><h3>Descuento<br>$ {{number_format($unitariosa->descuento,0, ",", ".")}}</h3></td>
-			<td style="background:none"><h3>Totaldes<br>$ {{number_format($unitariosa->totaldes,0, ",", ".")}}</h3></td>
+			<td style="background:none"><h3>Total Descuentos<br>$ {{number_format($unitariosa->totaldes,0, ",", ".")}}</h3></td>
 			<td style="background:none"><h3>Neto<br>$ {{number_format($unitariosa->neto,0, ",", ".")}}</h3></td>
 			@endforeach
 		</tr>
@@ -111,10 +112,10 @@ echo date('Y-m-d H:i:s');
 
 
 
-<table class="table table-hover">
+<table class="table table-hover" style="margin-top:20px">
 
 		<thead>
-			<tr >
+			<tr style="background:#EDEDED">
 				<th style="text-align:center">Mes</th>
 				<th style="text-align:center">Fecha</th>
 				<th style="text-align:center"># Factura</th>
@@ -157,10 +158,10 @@ echo date('Y-m-d H:i:s');
 			<td style="text-align:center">${{number_format($gastosa->totaldes,0, ",", ".")}}</td>
 			<td style="text-align:center">${{number_format($gastosa->neto,0, ",", ".")}}</td>
 			</tr>
-			
+			@endforeach
 		</tbody>
 		<tfoot>
-		@endforeach
+		
 </table>
 <br>
 <h2>Netos por mes</h2>

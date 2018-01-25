@@ -476,9 +476,10 @@ public function facturaproducto($id){
 
 		public function editargasto($id){
 
-		$gastos = Gasto::join('concepto','concepto.id','=','gastos.concepto')->get();
+		$gastos = Gasto::where('id', '=', $id)->get();
+		$conceptualizacion = Gasto::join('concepto','concepto.id','=','gastos.concepto')->get();
 		$concepto = Concepto::all();
-		return view('facturacion::editar-gastos')->with('gastos', $gastos)->with('concepto', $concepto);
+		return view('facturacion::editar-gastos')->with('gastos', $gastos)->with('concepto', $concepto)->with('conceptualizacion', $conceptualizacion);
 	    }
 
 	       public function actualizargasto($id){

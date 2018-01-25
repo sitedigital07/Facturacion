@@ -279,6 +279,7 @@ $facturacion = Digitalsite\Facturacion\Factura::find($id)->Productos;
           $unitarios  = DB::table('gastos')
           ->whereBetween('fecha', array($min_price, $max_price))
           ->selectRaw('sum(valor) as valor')
+          ->selectRaw('sum(valornogra) as valornogra')
           ->selectRaw('sum(iva) as iva')
           ->selectRaw('sum(impuesto) as impuesto')
           ->selectRaw('sum(valorfac) as valorfac')
@@ -372,7 +373,7 @@ $facturacion = Digitalsite\Facturacion\Factura::find($id)->Productos;
         $pdf->getDomPDF()->set_option("enable_php", true);
         
       $pdf = PDF::loadView('facturacion::informegasto', compact('users', 'clientes', 'resultados', 'gastos', 'total', 'empresa', 'iva', 'fuente', 'ica', 'productos', 'facturas', 'conteo', 'prefijo', 'min_price', 'max_price', 'unitarios'));
-        $pdf->setPaper('A4', 'landscape');
+        $pdf->setPaper('Legal', 'landscape');
       return  $pdf->stream();
 });
 

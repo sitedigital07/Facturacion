@@ -63,6 +63,9 @@
 @foreach($gastos as $gastos)
 @endforeach
 
+@foreach($conceptualizacion as $conceptualizacion)
+@endforeach
+
 
 
 <div class="container">
@@ -147,7 +150,7 @@
                                             <div class="col-md-9">
                                                <select name="concepto" id="inputConcepto" class="form-control">
 
-                                                 <option value="{{$gastos->id}}">{{$gastos->concepto}}</option>
+                                                 <option value="{{$gastos->id}}">{{$conceptualizacion->concepto}}</option>
                                                  @foreach($concepto as $concepto)
                                                  <option value="{{$concepto->id}}">{{$concepto->concepto}}</option>
                                                  @endforeach
