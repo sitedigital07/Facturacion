@@ -511,6 +511,21 @@ public function facturaproducto($id){
 	    }
 
 
+	      public function pdfview(Request $request)
+    {
+        $items = DB::table("gastos")->get();
+        view()->share('items',$items);
+
+
+        if($request->has('download')){
+            $pdf = PDF::loadView('pdfview');
+            return $pdf->download('pdfview.pdf');
+        }
+
+
+        return view('pdfview');
+    }
+
 }
 
 

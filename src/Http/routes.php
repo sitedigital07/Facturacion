@@ -270,13 +270,10 @@ $facturacion = Digitalsite\Facturacion\Factura::find($id)->Productos;
 
  Route::post('informe/generalgasto', function(){
        
-       $min_price = Input::has('min_price') ? Input::get('min_price') : 0;
-       $max_price = Input::has('max_price') ? Input::get('max_price') : 10000000;
-       $clientes =  Input::get('cliente') ;
-       $estados =  Input::get('estado') ;
-   
-      
-          $unitarios  = DB::table('gastos')
+        $min_price = Input::has('min_price') ? Input::get('min_price') : 0;
+       $max_price = Input::has('max_price') ? Input::get('max_price') : 10000;
+
+       $unitarios  = DB::table('gastos')
           ->whereBetween('fecha', array($min_price, $max_price))
           ->selectRaw('sum(valor) as valor')
           ->selectRaw('sum(valornogra) as valornogra')
@@ -290,92 +287,63 @@ $facturacion = Digitalsite\Facturacion\Factura::find($id)->Productos;
           ->selectRaw('sum(neto) as neto')
           ->get();
 
-          $gastos = DB::table('gastos')
+         $gastos = DB::table('gastos')
           ->whereBetween('fecha', array($min_price, $max_price))
           ->orderBy('mes')
           ->get();
 
+         $prefijo = Digitalsite\Facturacion\Empresa::find(1);
 
-          $resultados =  DB::table('gastos')
+           $resultados =  DB::table('gastos')
           ->whereBetween('fecha', array($min_price, $max_price))
           ->selectRaw('mes')
           ->selectRaw('sum(neto) as valor')
-   
+          ->groupBy('mes')
+          ->get();
+
+      
+        
+      return View::make('facturacion::informegastosweb', compact('clientes','unitarios','gastos','prefijo','resultados'));
+});
+
+
+ Route::get('informe/prueba', function(){
+
+
+        $min_price = Input::has('min_price') ? Input::get('min_price') : 0;
+       $max_price = Input::has('max_price') ? Input::get('max_price') : 10000;
+
+       $unitarios  = DB::table('gastos')
+          ->whereBetween('fecha', array($min_price, $max_price))
+          ->selectRaw('sum(valor) as valor')
+          ->selectRaw('sum(valornogra) as valornogra')
+          ->selectRaw('sum(iva) as iva')
+          ->selectRaw('sum(impuesto) as impuesto')
+          ->selectRaw('sum(valorfac) as valorfac')
+          ->selectRaw('sum(retefuente) as retefuente')
+          ->selectRaw('sum(reteica) as reteica')
+          ->selectRaw('sum(descuento) as descuento')
+          ->selectRaw('sum(totaldes) as totaldes')
+          ->selectRaw('sum(neto) as neto')
+          ->get();
+
+         $gastos = DB::table('gastos')
+          ->whereBetween('fecha', array($min_price, $max_price))
+          ->orderBy('mes')
+          ->get();
+
+         $prefijo = Digitalsite\Facturacion\Empresa::find(1);
+
+           $resultados =  DB::table('gastos')
+          ->whereBetween('fecha', array($min_price, $max_price))
+          ->selectRaw('mes')
+          ->selectRaw('sum(neto) as valor')
           ->groupBy('mes')
           ->get();
 
 
-         $total = DB::table('productos')
-         ->join('facturas', 'productos.factura_id', '=', 'facturas.id')
-         ->whereBetween('f_emision', array($min_price, $max_price))
-         ->where('cliente_id', 'like', '%' . $clientes . '%')
-         ->where('estadof', 'like', '%' . $estados . '%')
-         
-         ->sum('v_total');
-
-          $iva = DB::table('productos')
-         ->join('facturas', 'productos.factura_id', '=', 'facturas.id')
-         ->whereBetween('f_emision', array($min_price, $max_price))
-         ->where('cliente_id', 'like', '%' . $clientes . '%')
-         ->where('estadof', 'like', '%' . $estados . '%')
-         
-         ->sum('costoiva');
-
-         $fuente = DB::table('productos')
-         ->join('facturas', 'productos.factura_id', '=', 'facturas.id')
-         ->whereBetween('f_emision', array($min_price, $max_price))
-         ->where('cliente_id', 'like', '%' . $clientes . '%')
-         ->where('estadof', 'like', '%' . $estados . '%')
-         
-         ->sum('rtefte');
-
-         $ica = DB::table('productos')
-         ->join('facturas', 'productos.factura_id', '=', 'facturas.id')
-         ->whereBetween('f_emision', array($min_price, $max_price))
-         ->where('cliente_id', 'like', '%' . $clientes . '%')
-         ->where('estadof', 'like', '%' . $estados . '%')
-         ->sum('rteica');
-
-         $productos = DB::table('productos')
-        ->join('facturas', 'productos.factura_id', '=', 'facturas.id')
-        ->whereBetween('f_emision', array($min_price, $max_price))
-         ->where('cliente_id', 'like', '%' . $clientes . '%')
-         ->where('estadof', 'like', '%' . $estados . '%')
-          ->selectRaw('sum(v_total) as sum')
-          ->selectRaw('sum(masiva) as masiva')
-          ->selectRaw('sum(rtefte) as rtefte')
-          ->selectRaw('sum(rteica) as rteica')
-          ->selectRaw('cliente_id as mus')
-          ->groupBy('cliente_id')
-          ->get();
-
-          $empresa = DB::table('empresas')->where('id', 1)->get();
-
-            $conteo = DB::table('clientes')
-        ->join('facturas', 'clientes.id', '=', 'facturas.cliente_id')
-        ->whereBetween('f_emision', array($min_price, $max_price))
-         ->where('cliente_id', 'like', '%' . $clientes . '%')
-         ->where('estadof', 'like', '%' . $estados . '%')
-          ->selectRaw('count(cliente_id) as sum')
-          ->selectRaw('cliente_id as mus')
-          ->groupBy('cliente_id')
-          ->get();
-
-          $facturas = DB::table('facturas')->count();
-          $cuentas = DB::table('productos')
-          ->get();
-
-          $prefijo = Digitalsite\Facturacion\Empresa::find(1);
-
-        $clientes = DB::table('clientes')->get();
-
-        $pdf = app('dompdf.wrapper');
-        $pdf->getDomPDF()->set_option("enable_php", true);
-        
-      $pdf = PDF::loadView('facturacion::informegasto', compact('users', 'clientes', 'resultados', 'gastos', 'total', 'empresa', 'iva', 'fuente', 'ica', 'productos', 'facturas', 'conteo', 'prefijo', 'min_price', 'max_price', 'unitarios'));
-        $pdf->setPaper('Legal', 'landscape');
-      return  $pdf->stream();
+      return View::make('facturacion::informeprueba', compact('clientes','unitarios','gastos','prefijo','resultados'));
 });
 
-
+    Route::get('camarada/pdfview',array('as'=>'pdfview','uses'=>'Digitalsite\Facturacion\Http\FacturacionController@pdfview'));
 });
