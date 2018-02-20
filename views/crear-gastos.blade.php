@@ -150,6 +150,23 @@
 
 
                                              <div class="form-group">
+                                            <label class="col-md-3 control-label" for="example-password-input">Valor Gasto / Compra No Gravado</label>
+                                            <div class="col-md-9">
+                                                 {{Form::text('valornogra', '0', array('class' => 'form-control'))}}
+                                            </div>
+                                        </div>
+
+                                         
+
+                                         <div class="form-group">
+                                            <label class="col-md-3 control-label" for="example-password-input">Impuesto consumo</label>
+                                            <div class="col-md-9">
+                                                 {{Form::number('impuesto', '0', array('class' => 'form-control'))}}
+                                            </div>
+                                        </div>
+
+
+                                             <div class="form-group">
                                             <label class="col-md-3 control-label" for="example-password-input">Valor Gasto / Compra Gravado</label>
                                             <div class="col-md-9">
                                                  {{Form::text('valor', '0', array('class' => 'form-control'))}}
@@ -163,19 +180,12 @@
                                             </div>
                                         </div>
 
-                                             <div class="form-group">
-                                            <label class="col-md-3 control-label" for="example-password-input">Valor Gasto / Compra No Gravado</label>
+                                           <div class="form-group">
+                                            <label class="col-md-3 control-label" for="example-select">Tipo Iva</label>
                                             <div class="col-md-9">
-                                                 {{Form::text('valornogra', '0', array('class' => 'form-control'))}}
-                                            </div>
-                                        </div>
-
-                                         
-
-                                         <div class="form-group">
-                                            <label class="col-md-3 control-label" for="example-password-input">Impuesto consumo</label>
-                                            <div class="col-md-9">
-                                                 {{Form::number('impuesto', '0', array('class' => 'form-control'))}}
+                                                  {{ Form::select('conceptoiva', ['' => '-- Seleccione tipo iva --',
+                                                  '1' => 'De Bienes Gravados',
+                                                  '2' => 'De Servicios Gravados'], null, array('class' => 'form-control')) }}
                                             </div>
                                         </div>
 

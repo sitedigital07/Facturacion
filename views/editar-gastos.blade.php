@@ -83,7 +83,7 @@
                                     <!-- END Form Elements Title -->
                                     
                                     <!-- Basic Form Elements Content -->                                                    
-                                     {{ Form::open(array('method' => 'POST','oninput' => 'valorfac.value=parseInt(valor.value)+parseInt(impuesto.value)+parseInt(iva.value);totaldes.value=parseInt(retefuente.value)+parseInt(reteica.value)+parseInt(reteiva.value)+parseInt(descuento.value);neto.value=parseInt(valorfac.value)-parseInt(totaldes.value)','class' => 'form-horizontal','id' => 'defaultForm', 'url' => array('gestion/factura/actualizargasto',$gastos->id))) }}
+                                     {{ Form::open(array('method' => 'PUT','oninput' => 'valorfac.value=parseInt(valor.value)+parseInt(impuesto.value)+parseInt(iva.value);totaldes.value=parseInt(retefuente.value)+parseInt(reteica.value)+parseInt(reteiva.value)+parseInt(descuento.value);neto.value=parseInt(valorfac.value)-parseInt(totaldes.value)','class' => 'form-horizontal','id' => 'defaultForm', 'url' => array('gestion/factura/actualizargasto',$gastos->id))) }}
 
                                         <div class="form-group">
                                             <label class="col-md-3 control-label" for="example-email-input">Mes</label>
@@ -136,7 +136,6 @@
                                             </div>
                                         </div>
 
-
                                           
                                             <div class="form-group">
                                             <label class="col-md-3 control-label" for="example-password-input">Descripción Gasto</label>
@@ -159,21 +158,6 @@
                                         </div>
 
 
-
-                                             <div class="form-group">
-                                            <label class="col-md-3 control-label" for="example-password-input">Valor Gasto / Compra</label>
-                                            <div class="col-md-9">
-                                                 {{Form::text('valor', $gastos->valor, array('class' => 'form-control'))}}
-                                            </div>
-                                        </div>
-
-                                        <div class="form-group">
-                                            <label class="col-md-3 control-label" for="example-password-input">IVA</label>
-                                            <div class="col-md-9">
-                                                 {{Form::text('iva', '0', array('class' => 'form-control'))}}
-                                            </div>
-                                        </div>
-
                                              <div class="form-group">
                                             <label class="col-md-3 control-label" for="example-password-input">Valor Gasto / Compra No Gravado</label>
                                             <div class="col-md-9">
@@ -185,6 +169,31 @@
                                             <label class="col-md-3 control-label" for="example-password-input">Impuesto consumo</label>
                                             <div class="col-md-9">
                                                  {{Form::number('impuesto', $gastos->impuesto, array('class' => 'form-control'))}}
+                                            </div>
+                                        </div>
+
+
+
+                                             <div class="form-group">
+                                            <label class="col-md-3 control-label" for="example-password-input">Valor Gasto / Compra</label>
+                                            <div class="col-md-9">
+                                                 {{Form::text('valor', $gastos->valor, array('class' => 'form-control'))}}
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label class="col-md-3 control-label" for="example-password-input">IVA</label>
+                                            <div class="col-md-9">
+                                                 {{Form::text('iva', $gastos->iva, array('class' => 'form-control'))}}
+                                            </div>
+                                        </div>
+
+                                          <div class="form-group">
+                                            <label class="col-md-3 control-label" for="example-select">Tipo Iva</label>
+                                            <div class="col-md-9">
+                                                  {{ Form::select('conceptoiva', [$gastos->conceptoiva => $gastos->conceptoiva,
+                                                  '1' => 'De Bienes Gravados',
+                                                  '2' => 'De Servicios Gravados'], null, array('class' => 'form-control')) }}
                                             </div>
                                         </div>
 
