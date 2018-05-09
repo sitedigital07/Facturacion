@@ -466,6 +466,10 @@ public function facturaproducto($id){
 		$contenido->fecha = Input::get('fecha');
 		$contenido->compra = Input::get('compra');
 		$contenido->tercero = Input::get('tercero');
+		$contenido->documento = Input::get('documento');
+		$contenido->direccion = Input::get('direccion');
+		$contenido->ciudad = Input::get('ciudad');
+		$contenido->telefono = Input::get('telefono');
 		$contenido->tipo = Input::get('tipo');
 		$contenido->descripcion = Input::get('descripcion');
 		$contenido->concepto = Input::get('concepto');
@@ -494,6 +498,10 @@ public function facturaproducto($id){
 	$contenido->fecha = Input::get('fecha');
 	$contenido->compra = Input::get('compra');
 	$contenido->tercero = Input::get('tercero');
+	$contenido->documento = Input::get('documento');
+	$contenido->direccion = Input::get('direccion');
+	$contenido->ciudad = Input::get('ciudad');
+	$contenido->telefono = Input::get('telefono');
 	$contenido->tipo = Input::get('tipo');
 	$contenido->descripcion = Input::get('descripcion');
 	$contenido->concepto = Input::get('concepto');

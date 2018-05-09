@@ -127,6 +127,34 @@
                                         </div>
 
                                         <div class="form-group">
+                                            <label class="col-md-3 control-label" for="example-password-input">Nit o C.C.</label>
+                                            <div class="col-md-9">
+                                                 {{Form::text('documento', $gastos->documento, array('class' => 'form-control'))}}
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label class="col-md-3 control-label" for="example-password-input">Nit o C.C.</label>
+                                            <div class="col-md-9">
+                                                 {{Form::text('direccion', $gastos->direccion, array('class' => 'form-control'))}}
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label class="col-md-3 control-label" for="example-password-input">Ciudad</label>
+                                            <div class="col-md-9">
+                                                 {{Form::text('ciudad', $gastos->ciudad, array('class' => 'form-control'))}}
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label class="col-md-3 control-label" for="example-password-input">Teléfono</label>
+                                            <div class="col-md-9">
+                                                 {{Form::text('telefono', $gastos->telefono, array('class' => 'form-control'))}}
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
                                             <label class="col-md-3 control-label" for="example-select">Tipo Gasto</label>
                                             <div class="col-md-9">
                                                   {{ Form::select('tipo', [$gastos->tipo => $gastos->tipo,
