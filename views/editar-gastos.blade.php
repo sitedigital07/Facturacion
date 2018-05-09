@@ -134,7 +134,7 @@
                                         </div>
 
                                         <div class="form-group">
-                                            <label class="col-md-3 control-label" for="example-password-input">Nit o C.C.</label>
+                                            <label class="col-md-3 control-label" for="example-password-input">Dirección</label>
                                             <div class="col-md-9">
                                                  {{Form::text('direccion', $gastos->direccion, array('class' => 'form-control'))}}
                                             </div>
