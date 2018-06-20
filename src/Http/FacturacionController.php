@@ -1,7 +1,7 @@
 <?php
 
-
 namespace Digitalsite\Facturacion\Http;
+
 use App\Http\Requests\ClienteCreateRequest;
 use App\Http\Requests\ProductoCreateRequest;
 use App\Http\Requests\EmpresaUpdateRequest;

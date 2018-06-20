@@ -55,13 +55,14 @@
 
 
 
-
-
-
-
-
 <div class="container">
-<a href="/gestion/factura/crear-gasto" class="btn btn-primary">Crear Gasto</a> <a href="/gestion/factura/crear-concepto" class="btn btn-primary">Crear Concepto</a> <a href="/informe/generar-informacion" class="btn btn-primary">Reporte Gastos</a>
+<a href="/gestion/factura/crear-gasto" class="btn btn-primary">Crear Gasto</a> 
+<a href="/gestion/factura/crear-concepto" class="btn btn-primary">Crear Concepto</a> 
+<a href="/informe/generar-informacion" class="btn btn-primary">Reporte Gastos</a>
+<a href="{{ URL::to('exportador/xls') }}" class="btn btn-primary">Descargar XLS</a>
+<a href="{{ URL::to('informe/exportpdf') }}" class="btn btn-primary disabled">Descargar PDF</a>
+
+
 </div>
 <br>
 <div class="container">

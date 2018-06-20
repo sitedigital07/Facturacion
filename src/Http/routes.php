@@ -347,3 +347,16 @@ $facturacion = Digitalsite\Facturacion\Factura::find($id)->Productos;
 
     Route::get('camarada/pdfview',array('as'=>'pdfview','uses'=>'Digitalsite\Facturacion\Http\FacturacionController@pdfview'));
 });
+
+
+Route::get('excel-oficina/web', function () {
+    return view('facturacion::importExport');
+});
+
+
+
+Route::get('importExport', 'Digitalsite\Facturacion\Http\ImportExportController@importExport');
+Route::get('exportador/{type}', 'Digitalsite\Facturacion\Http\ImportExportController@exportador');
+Route::post('importador', 'Digitalsite\Facturacion\Http\ImportExportController@importador');
+Route::get('exportadores/excel/{type}', 'Digitalsite\Facturacion\Http\ImportExportController@downloadExcel');
+Route::get('informe/exportpdf', 'Digitalsite\Facturacion\Http\ImportExportController@exportPDF');
