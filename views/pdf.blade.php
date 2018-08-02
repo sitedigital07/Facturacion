@@ -4,12 +4,12 @@
 
     <style type="text/css">
 .d_productos {margin-top: 325px; margin-left: 35px; font-size: 14px}
-.d_clientes {top: 145px; margin-left: 25px; position: absolute;font-family: 'Lato', sans-serif; font-size: 14px}
-.dirigido{ text-transform: capitalize;position: absolute;top: 205px; font-size: 14px; margin-left: 25px;font-family: 'Lato', sans-serif; }
-.documento{ position: absolute;top: 163px; font-size: 14px; margin-left: 25px; font-family: 'Lato', sans-serif;}
-.direccion{  position: absolute;top: 220px; font-size: 14px; margin-left: 25px; font-family: 'Lato', sans-serif;}
-.ciudad{position: absolute;top: 237px; font-size: 14px; margin-left: 25px; font-family: 'Lato', sans-serif;}
-.telefono{text-transform: capitalize; position: absolute;top: 254px; font-size: 14px; margin-left: 25px; font-family: 'Lato', sans-serif;}
+.d_clientes {top: 145px; margin-left: 25px; position: absolute;font-family: 'Lato', sans-serif; font-size: 14px; width: 300px}
+.dirigido{ text-transform: capitalize;position: absolute;top: 222px; font-size: 14px; margin-left: 25px;font-family: 'Lato', sans-serif; }
+.documento{ position: absolute;top: 180px; font-size: 14px; margin-left: 25px; font-family: 'Lato', sans-serif;}
+.direccion{  position: absolute;top: 237px; font-size: 14px; margin-left: 25px; font-family: 'Lato', sans-serif;}
+.ciudad{position: absolute;top: 254px; font-size: 14px; margin-left: 25px; font-family: 'Lato', sans-serif;}
+.telefono{text-transform: capitalize; position: absolute;top: 271px; font-size: 14px; margin-left: 25px; font-family: 'Lato', sans-serif;}
 .emision{position: absolute; font-size: 11px; margin-left: 441px; top: 263px;font-family: 'Lato', sans-serif; font-weight: 100; text-align: center}
 .vencimiento{position: absolute;top: 263px; font-size: 11px; margin-left: 534px;font-family: 'Lato', sans-serif; font-weight: 100; text-align: center}
 .product{color: red;top: 350px; margin-left: 10px;  width: 35%;}
