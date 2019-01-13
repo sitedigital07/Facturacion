@@ -33,30 +33,25 @@
   @if($status=='ok_create')
    <div class="alert alert-success">
     <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-    <strong>Usuario registrado con éxito</strong>
+    <strong>Cliente registrado con éxito</strong>
    </div>
   @endif
 
   @if($status=='ok_delete')
    <div class="alert alert-danger">
     <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-    <strong>Usuario eliminado con éxito</strong>
+    <strong>Ciente eliminado con éxito</strong>
    </div>
   @endif
 
   @if($status=='ok_update')
    <div class="alert alert-warning">
     <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-    <strong>Usuario actualizado con éxito</strong>
+    <strong>Cliente actualizado con éxito</strong>
    </div>
   @endif
 
  </div>
-
-
-
-
-
 
 
 
@@ -68,7 +63,6 @@
                             <div class="block-title">
                                 <h2><strong>Clientes</strong> Registrados</h2>
                             </div>
-                            <p><a href="https://datatables.net/" target="_blank">DataTables</a> is a plug-in for the Jquery Javascript library. It is a highly flexible tool, based upon the foundations of progressive enhancement, which will add advanced interaction controls to any HTML table. It is integrated with template's design and it offers many features such as on-the-fly filtering and variable length pagination.</p>
 
                             <div class="table-responsive">
                                 <table id="example-datatable" class="table table-vcenter table-condensed table-bordered">
